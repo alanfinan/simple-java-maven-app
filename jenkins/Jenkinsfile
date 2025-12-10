@@ -18,7 +18,12 @@ pipeline {
 
         stage('Deliver') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                   sh '''
+                    echo "Finding built JAR..."
+                    JAR_FILE=$(ls target/*.jar | head -n 1)
+                    echo "Running: $JAR_FILE"
+                    java -jar "$JAR_FILE"
+                '''
             }
         }
 
